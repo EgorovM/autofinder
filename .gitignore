@@ -89,6 +89,7 @@ local_settings.py
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+django_env/
 
 .env
 db.sqlite3
