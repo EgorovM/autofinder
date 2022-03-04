@@ -1,14 +1,17 @@
-from django.db import models
-from django.conf import settings
-from django.core.mail import send_mail
+import re
 
+from django.db import models
 from djrichtextfield.models import RichTextField
+
+from helpers.notification import NOTIFIERS_LIST
 
 SHORT_TEXT_CHAR_AMOUNT = 172
 
 
 def notify_owners(title, text):
-    send_mail(title, text, settings.EMAIL_HOST_USER, settings.SENT_EMAILS_TO)
+    for notifier_class in NOTIFIERS_LIST:
+        notifier = notifier_class()
+        notifier.notify(title, text)
 
 
 class FeedbackContact(models.Model):
@@ -17,7 +20,6 @@ class FeedbackContact(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        print('saving...')
         notify_owners(
             'Вас просят связаться',
             f'Телефон: {self.telephone}\n'
@@ -41,8 +43,9 @@ class BlogArticle(models.Model):
     created = models.DateTimeField('Дата создания', auto_now=True)
 
     def short_content(self):
-        short_word_count = self.content[:SHORT_TEXT_CHAR_AMOUNT].count(' ')
-        short_text_words = self.content.split()[:short_word_count]
+        content_without_tag = re.sub('<[^>]*>', ' ', self.content)
+        short_word_count = content_without_tag.count(' ')
+        short_text_words = content_without_tag.split()[:short_word_count]
 
         return " ".join(short_text_words) + '...'
 
@@ -60,7 +63,7 @@ class WorkExample(models.Model):
     saler_price = models.CharField('Цена продавца', max_length=31)
     after_price = models.CharField('Цена после торга', max_length=31)
 
-    img = models.ImageField('Изображение', upload_to='models/work_example')
+    img = models.ImageField('Изображение', upload_to='media/work_example')
     task = models.TextField('Задача')
     result = RichTextField('Результат')
 

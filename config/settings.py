@@ -93,7 +93,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'main.pagination.PageNumberPagination',
 }
 
-# mail
+# notification
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
@@ -101,9 +101,12 @@ EMAIL_HOST_USER = config['email']['user']
 EMAIL_HOST_PASSWORD = config['email']['password']
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-
 SENT_EMAILS_TO = ['egorov_michil@mail.ru']
 
+TELEGRAM_BOT_TOKEN = '5283757936:AAEEFYT_klEXvkdbkYmWxXMFQf7o3gxLy0s'
+TELEGRAM_CHANNEL_NAME = '@autofindertechchannel'
+
+SENT_WHATSAPP_TO = ['']
 # django richtext
 
 DJRICHTEXTFIELD_CONFIG = {
@@ -122,8 +125,12 @@ DJRICHTEXTFIELD_CONFIG = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config['postgres']['name'],
+        'USER': config['postgres']['user'],
+        'PASSWORD': config['postgres']['password'],
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

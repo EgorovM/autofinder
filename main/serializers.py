@@ -13,11 +13,15 @@ class BlogDetailSerializer(serializers.ModelSerializer):
     def get_is_youtube(self, obj: BlogArticle):
         return obj.youtube_id != ""
 
+    def build_absolute_url(self, image_url: str):
+        request = self.context.get('request')
+        return request.build_absolute_uri(image_url)
+
     def get_asset(self, obj: BlogArticle):
         if self.get_is_youtube(obj):
             return 'https://www.youtube.com/watch?v=%s' % obj.youtube_id
 
-        return obj.img.url
+        return self.build_absolute_url(obj.img.url)
 
 
 class BlogArticleListSerializer(BlogDetailSerializer):
@@ -30,7 +34,7 @@ class BlogArticleListSerializer(BlogDetailSerializer):
         if self.get_is_youtube(obj):
             return 'https://img.youtube.com/vi/%s/hqdefault.jpg' % obj.youtube_id
 
-        return obj.img.url
+        return self.build_absolute_url(obj.img.url)
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
