@@ -26,7 +26,7 @@ class BlogArticleViewSet(viewsets.ReadOnlyModelViewSet):
 class FeedbackViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = FeedbackContact.objects.all()
     serializer_class = FeedbackSerializer
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = ()
     permission_classes = [IsAuthenticated]
 
 
