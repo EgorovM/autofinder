@@ -25,9 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y)_u2i43ayoe$6)73sgh)q6a2*t-h^s%csd6*z!ra5_yi%an7='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:3000',
+# )
+
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 
 #config
@@ -44,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'drf_yasg',
     'djrichtextfield',
     'rest_framework',
@@ -59,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -89,6 +96,10 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'main.pagination.PageNumberPagination',
 }
