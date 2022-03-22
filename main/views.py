@@ -1,6 +1,5 @@
 from rest_framework import viewsets, mixins
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 from .models import BlogArticle, FeedbackContact, WorkExample
 from .serializers import (
@@ -26,7 +25,7 @@ class BlogArticleViewSet(viewsets.ReadOnlyModelViewSet):
 class FeedbackViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = FeedbackContact.objects.all()
     serializer_class = FeedbackSerializer
-    authentication_classes = ()
+    authentication_classes = (TokenAuthentication, )
 
 
 class WorkExampleViewSet(viewsets.ReadOnlyModelViewSet):
