@@ -7,6 +7,10 @@ from rest_framework.response import Response
 class PageNumberPagination(pagination.PageNumberPagination):
     page_size = 20
 
+    def paginate_queryset(self, queryset, request, view=None):
+        self.page_size = int(request.GET.get('objectCount', self.page_size))
+        return super(PageNumberPagination, self).paginate_queryset(queryset, request, view=view)
+
     def get_paginated_response(self, data):
         return Response({
             'next': self.get_next_link(),
