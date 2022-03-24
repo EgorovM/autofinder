@@ -1,12 +1,10 @@
 from rest_framework import viewsets, mixins
-from rest_framework.authentication import TokenAuthentication
 
 from .models import BlogArticle, FeedbackContact, WorkExample
 from .serializers import (
     BlogArticleListSerializer,
     BlogDetailSerializer,
     FeedbackSerializer,
-    WorkExampleDetailSerializer,
     WorkExampleListSerializer
 )
 from .pagination import WorkExamplesPagination
@@ -25,16 +23,10 @@ class BlogArticleViewSet(viewsets.ReadOnlyModelViewSet):
 class FeedbackViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = FeedbackContact.objects.all()
     serializer_class = FeedbackSerializer
-    authentication_classes = (TokenAuthentication, )
+    authentication_classes = ()
 
 
-class WorkExampleViewSet(viewsets.ReadOnlyModelViewSet):
+class WorkExampleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = WorkExample.objects.all().order_by('-created')
     pagination_class = WorkExamplesPagination
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return WorkExampleListSerializer
-
-        return WorkExampleDetailSerializer
-
+    serializer_class = WorkExampleListSerializer

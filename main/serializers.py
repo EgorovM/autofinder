@@ -46,10 +46,4 @@ class FeedbackSerializer(serializers.ModelSerializer):
 class WorkExampleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkExample
-        fields = ['id', 'img', 'car_name', 'year_of_issue', 'after_price', 'created']
-
-
-class WorkExampleDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WorkExample
         fields = '__all__'

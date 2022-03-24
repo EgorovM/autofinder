@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'djrichtextfield',
     'rest_framework',
-    'rest_framework.authtoken',
     'main.apps.MainConfig',
 ]
 
