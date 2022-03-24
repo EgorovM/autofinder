@@ -17,13 +17,15 @@ def notify_owners(title, text):
 class FeedbackContact(models.Model):
     telephone = models.CharField(max_length=63)
     full_name = models.CharField(max_length=63)
+    details = models.TextField(default='Обратная связь')
     created_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         notify_owners(
             'Вас просят связаться',
             f'Телефон: {self.telephone}\n'
-            f'ФИО: {self.full_name}'
+            f'ФИО: {self.full_name}\n'
+            f'Детали: {self.details}'
         )
         super().save(*args, **kwargs)
 
