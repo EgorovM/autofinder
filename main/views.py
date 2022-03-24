@@ -24,6 +24,7 @@ class FeedbackViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = FeedbackContact.objects.all()
     serializer_class = FeedbackSerializer
     authentication_classes = ()
+    permission_classes = ()
 
 
 class WorkExampleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
