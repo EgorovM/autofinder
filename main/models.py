@@ -77,3 +77,40 @@ class WorkExample(models.Model):
     class Meta:
         verbose_name = "Пример работы"
         verbose_name_plural = "Примеры работы"
+
+
+class Service(models.Model):
+    title = models.CharField('Название услуги', max_length=63)
+    description = models.TextField('Описание услуги')
+    price_from = models.CharField('Цены от', max_length=15)
+    service_include = RichTextField()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Услуга"
+        verbose_name_plural = "Услуги"
+
+
+class CompanyInfo(models.Model):
+    info = RichTextField()
+
+    def __str__(self):
+        return f'Информация @{self.id}'
+
+    class Meta:
+        verbose_name = "Информация о компании"
+        verbose_name_plural = "Информация о компании"
+
+
+class FAQuestion(models.Model):
+    question = models.CharField(max_length=255)
+    answer = RichTextField()
+
+    def __str__(self):
+        return self.question
+
+    class Meta:
+        verbose_name = "Часто задаваемый вопрос"
+        verbose_name_plural = "Часто задаваемые вопросы"

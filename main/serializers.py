@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import BlogArticle, FeedbackContact, WorkExample
+from .models import (
+    BlogArticle,
+    FeedbackContact,
+    WorkExample,
+    Service,
+    CompanyInfo,
+    FAQuestion,
+)
 
 
 class BlogDetailSerializer(serializers.ModelSerializer):
@@ -46,4 +53,22 @@ class FeedbackSerializer(serializers.ModelSerializer):
 class WorkExampleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkExample
+        fields = '__all__'
+
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = '__all__'
+
+
+class CompanyInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyInfo
+        fields = '__all__'
+
+
+class FAQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQuestion
         fields = '__all__'
