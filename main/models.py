@@ -2,7 +2,7 @@ import re
 
 from django.db import models
 from djrichtextfield.models import RichTextField
-from PIL import Image
+from PIL import Image, ImageOps
 
 from helpers.notification import NOTIFIERS_LIST
 
@@ -15,9 +15,11 @@ def notify_owners(title, text):
         notifier.notify(title, text)
 
 
-def compress_image(path):
-    image = Image.open(path)
-    image.save(path, quality=20, optimize=True)
+def fit_image(image, size):
+    img = Image.open(image)
+    img = ImageOps.fit(img, size, Image.ANTIALIAS)
+
+    img.save(image.path)
 
 
 class FeedbackContact(models.Model):
@@ -44,6 +46,8 @@ class FeedbackContact(models.Model):
 
 
 class BlogArticle(models.Model):
+    BLOG_IMG_SIZE = (480, 360)
+
     title = models.CharField('Заголовок', max_length=63)
     content = RichTextField('Текст')
     youtube_id = models.CharField('Идентификатор видео youtube', blank=True, max_length=1023)
@@ -66,10 +70,14 @@ class BlogArticle(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        compress_image(self.img.path)
+
+        if self.img:
+            fit_image(self.img, self.BLOG_IMG_SIZE)
 
 
 class WorkExample(models.Model):
+    WORK_EXAMPLE_IMG_SIZE = (480, 360)
+
     car_name = models.CharField('Название машины', max_length=63)
     year_of_issue = models.CharField('Год выпуска', max_length=15)
     saler_price = models.CharField('Цена продавца', max_length=31)
@@ -90,7 +98,9 @@ class WorkExample(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        compress_image(self.img.path)
+
+        if self.img:
+            fit_image(self.img, self.WORK_EXAMPLE_IMG_SIZE)
 
 
 class Service(models.Model):
