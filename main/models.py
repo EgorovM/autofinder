@@ -106,7 +106,7 @@ class CompanyInfo(models.Model):
 
 class FAQuestion(models.Model):
     question = models.CharField(max_length=255)
-    answer = RichTextField()
+    answer = models.TextField()
 
     def __str__(self):
         return self.question
