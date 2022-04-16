@@ -2,6 +2,7 @@ import re
 
 from django.db import models
 from djrichtextfield.models import RichTextField
+from PIL import Image
 
 from helpers.notification import NOTIFIERS_LIST
 
@@ -12,6 +13,11 @@ def notify_owners(title, text):
     for notifier_class in NOTIFIERS_LIST:
         notifier = notifier_class()
         notifier.notify(title, text)
+
+
+def compress_image(path):
+    image = Image.open(path)
+    image.save(path, quality=20, optimize=True)
 
 
 class FeedbackContact(models.Model):
@@ -58,6 +64,10 @@ class BlogArticle(models.Model):
         verbose_name = "Статья блога"
         verbose_name_plural = "Статьи блога"
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        compress_image(self.img.path)
+
 
 class WorkExample(models.Model):
     car_name = models.CharField('Название машины', max_length=63)
@@ -77,6 +87,10 @@ class WorkExample(models.Model):
     class Meta:
         verbose_name = "Пример работы"
         verbose_name_plural = "Примеры работы"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        compress_image(self.img.path)
 
 
 class Service(models.Model):
