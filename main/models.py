@@ -65,7 +65,7 @@ class WorkExample(models.Model):
     saler_price = models.CharField('Цена продавца', max_length=31)
     after_price = models.CharField('Цена после торга', max_length=31)
 
-    img = models.ImageField('Изображение', upload_to='media/work_example')
+    img = models.ImageField('Изображение', upload_to='work_example')
     task = models.TextField('Задача')
     result = RichTextField('Результат')
 
