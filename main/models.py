@@ -108,6 +108,7 @@ class Service(models.Model):
     description = models.TextField('Описание услуги')
     price_from = models.CharField('Цены от', max_length=15)
     service_include = RichTextField()
+    icon = models.ImageField('Изображение', upload_to='service_icons')
 
     def __str__(self):
         return self.title
