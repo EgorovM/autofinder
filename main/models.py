@@ -76,6 +76,7 @@ class BlogArticle(models.Model):
 
 
 class WorkExample(models.Model):
+    ADDITIONAL_IMAGES_FIELDS = ('addition_img1', 'addition_img2', 'addition_img3', 'addition_img4', 'addition_img5')
     WORK_EXAMPLE_IMG_SIZE = (480, 360)
 
     car_name = models.CharField('Название машины', max_length=63)
@@ -89,6 +90,12 @@ class WorkExample(models.Model):
 
     created = models.DateTimeField(auto_now=True)
 
+    addition_img1 = models.ImageField('Дополнительное изображение', upload_to='work_example', null=True, blank=True)
+    addition_img2 = models.ImageField('Дополнительное изображение', upload_to='work_example', null=True, blank=True)
+    addition_img3 = models.ImageField('Дополнительное изображение', upload_to='work_example', null=True, blank=True)
+    addition_img4 = models.ImageField('Дополнительное изображение', upload_to='work_example', null=True, blank=True)
+    addition_img5 = models.ImageField('Дополнительное изображение', upload_to='work_example', null=True, blank=True)
+
     def __str__(self):
         return self.car_name
 
@@ -97,10 +104,12 @@ class WorkExample(models.Model):
         verbose_name_plural = "Примеры работы"
 
     def save(self, *args, **kwargs):
+        img_fields = ['img', 'addition_img1', 'addition_img2', 'addition_img3', 'addition_img4', 'addition_img5']
         super().save(*args, **kwargs)
 
-        if self.img:
-            fit_image(self.img, self.WORK_EXAMPLE_IMG_SIZE)
+        for field in img_fields:
+            if hasattr(self, field) and getattr(self, field):
+                fit_image(getattr(self, field), self.WORK_EXAMPLE_IMG_SIZE)
 
 
 class Service(models.Model):
