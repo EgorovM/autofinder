@@ -141,7 +141,7 @@ DJRICHTEXTFIELD_CONFIG = {
    
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('POSTGRES_NAME'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
@@ -150,16 +150,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config['postgres']['name'],
-#         'USER': config['postgres']['user'],
-#         'PASSWORD': config['postgres']['password'],
-#         'HOST': 'db',
-#         'PORT': 5432,
-#     }
-# }
 
 
 # Password validation
