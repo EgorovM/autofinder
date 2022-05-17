@@ -51,9 +51,25 @@ class FeedbackSerializer(serializers.ModelSerializer):
 
 
 class WorkExampleListSerializer(serializers.ModelSerializer):
+    additional_images = serializers.SerializerMethodField()
+
     class Meta:
         model = WorkExample
-        fields = '__all__'
+        exclude = WorkExample.ADDITIONAL_IMAGES_FIELDS
+
+    def get_additional_images(self, obj):
+        request = self.context.get('request')
+        urls = []
+
+        for img_field_name in WorkExample.ADDITIONAL_IMAGES_FIELDS:
+            img_field = getattr(obj, img_field_name)
+
+            try:
+                urls.append(request.build_absolute_uri(img_field.url))
+            except Exception as e:  # todo
+                pass
+
+        return urls
 
 
 class ServiceSerializer(serializers.ModelSerializer):
