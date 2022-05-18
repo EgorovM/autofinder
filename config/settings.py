@@ -36,7 +36,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'http://localhost:8000',
 # )
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '80.78.251.13', '80.78.251.137', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '80.78.251.13', '80.78.251.137', 'avtopodbor-spb.pro', 'localhost']
 
 
 #config
