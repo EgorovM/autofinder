@@ -36,7 +36,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'http://localhost:8000',
 # )
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '80.78.251.13', '80.78.251.137', 'avtopodbor-spb.pro', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '80.78.251.13', '80.78.251.137', 'avtopodbor-spb.pro', 'www.avtopodbor-spb.pro', 'localhost']
 
 
 #config
@@ -116,7 +116,7 @@ EMAIL_HOST_USER = config['email']['user']
 EMAIL_HOST_PASSWORD = config['email']['password']
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-SENT_EMAILS_TO = ['egorov_michil@mail.ru']
+SENT_EMAILS_TO = ['SergeyPetlyak@gmail.com']
 
 TELEGRAM_BOT_TOKEN = '5283757936:AAEEFYT_klEXvkdbkYmWxXMFQf7o3gxLy0s'
 TELEGRAM_CHANNEL_NAME = '@autofindertechchannel'

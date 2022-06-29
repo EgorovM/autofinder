@@ -46,8 +46,6 @@ class FeedbackContact(models.Model):
 
 
 class BlogArticle(models.Model):
-    BLOG_IMG_SIZE = (480, 360)
-
     title = models.CharField('Заголовок', max_length=63)
     content = RichTextField('Текст')
     youtube_id = models.CharField('Идентификатор видео youtube', blank=True, max_length=1023)
@@ -56,10 +54,14 @@ class BlogArticle(models.Model):
 
     def short_content(self):
         content_without_tag = re.sub('<[^>]*>', ' ', self.content)
+        content_without_tag = content_without_tag.replace('&laquo;', '«')
+        content_without_tag = content_without_tag.replace('&raquo;', '»')
+        content_without_tag = re.sub('&\w+;', ' ', content_without_tag)
+
         short_word_count = content_without_tag.count(' ')
         short_text_words = content_without_tag.split()[:short_word_count]
 
-        return " ".join(short_text_words) + '...'
+        return " ".join(short_text_words)
 
     def __str__(self):
         return f"{self.title} @{self.created.date()}"
@@ -67,12 +69,6 @@ class BlogArticle(models.Model):
     class Meta:
         verbose_name = "Статья блога"
         verbose_name_plural = "Статьи блога"
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        if self.img:
-            fit_image(self.img, self.BLOG_IMG_SIZE)
 
 
 class WorkExample(models.Model):
