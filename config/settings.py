@@ -22,19 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y)_u2i43ayoe$6)73sgh)q6a2*t-h^s%csd6*z!ra5_yi%an7='
-
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:3000',
-#     'https://localhost:3000',
-#     'https://localhost:8000',
-#     'http://localhost:8000',
-# )
 
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '80.78.251.13', '80.78.251.137', 'avtopodbor-spb.pro', 'www.avtopodbor-spb.pro', 'localhost']
 
@@ -42,6 +33,10 @@ ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '80.78.251.13', '80.78.251.137', 'avtop
 #config
 config = configparser.ConfigParser()
 config.read(BASE_DIR / 'config/config.ini')
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = config['django']['secret_key']
 
 
 # Application definition
@@ -118,8 +113,8 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 SENT_EMAILS_TO = ['SergeyPetlyak@gmail.com']
 
-TELEGRAM_BOT_TOKEN = '5283757936:AAEEFYT_klEXvkdbkYmWxXMFQf7o3gxLy0s'
-TELEGRAM_CHANNEL_NAME = '@autofindertechchannel'
+TELEGRAM_BOT_TOKEN = config['telegram-bot']['bot-token']
+TELEGRAM_CHANNEL_NAME = config['telegram-bot']['bot-channel']
 
 SENT_WHATSAPP_TO = ['']
 # django richtext
@@ -129,8 +124,8 @@ DJRICHTEXTFIELD_CONFIG = {
     'init_template': 'djrichtextfield/init/tinymce.js',
     'settings': {
         'menubar': False,
-        'plugins': 'link image',
-        'toolbar': 'bold italic | link image | removeformat',
+        'plugins': 'link image textcolor',
+        'toolbar': 'bold italic | link image | removeformat | forecolor',
         'width': 700
     }
 }
@@ -139,17 +134,23 @@ DJRICHTEXTFIELD_CONFIG = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
    
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('POSTGRES_NAME'),
+#         'USER': os.environ.get('POSTGRES_USER'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#         'HOST': 'db',
+#         'PORT': 5432,
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
-
 
 
 # Password validation

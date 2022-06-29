@@ -7,7 +7,8 @@ from .views import (
     WorkExampleViewSet,
     ServiceViewSet,
     FAQuestionViewSet,
-    CompanyInfoView
+    InfoViewSet,
+    CompanyInfoView,
 )
 
 router = routers.DefaultRouter()
@@ -17,6 +18,8 @@ router.register('feedback', FeedbackViewSet)
 router.register('work_example', WorkExampleViewSet)
 router.register('service', ServiceViewSet)
 router.register('faq', FAQuestionViewSet)
+router.register('info', InfoViewSet)
+
 
 urlpatterns = [
     path('', include(router.urls)),

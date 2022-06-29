@@ -6,6 +6,7 @@ from .models import (
     Service,
     CompanyInfo,
     FAQuestion,
+    Info
 )
 
 
@@ -88,3 +89,9 @@ class FAQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FAQuestion
         fields = '__all__'
+
+
+class InfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Info
+        fields = ['id', 'slug', 'value']

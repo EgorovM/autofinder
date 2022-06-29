@@ -144,3 +144,35 @@ class FAQuestion(models.Model):
     class Meta:
         verbose_name = "Часто задаваемый вопрос"
         verbose_name_plural = "Часто задаваемые вопросы"
+
+
+class InfoGroup(models.Model):
+    name = models.CharField('Название', max_length=129, null=True, blank=True)
+    slug = models.CharField('На английском', max_length=129, unique=True)
+
+    def __str__(self):
+        return self.name or self.slug
+
+    class Meta:
+        verbose_name = "Группа информации"
+        verbose_name_plural = "Группы информации"
+
+
+class Info(models.Model):
+    group = models.ForeignKey(InfoGroup, on_delete=models.CASCADE, null=True, blank=True)
+    _slug = models.CharField('На английском', max_length=129)
+    slug = models.CharField(max_length=128, editable=False, unique=True)
+    value = RichTextField('Значение')
+
+    def __str__(self):
+        return self.slug
+
+    def save(self, *args, **kwargs):
+        group_slug = '' if not self.group else self.group.slug
+        self.slug = '_'.join([group_slug, self._slug])
+
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Информация"
+        verbose_name_plural = "Информации"

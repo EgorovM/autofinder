@@ -7,7 +7,8 @@ from .models import (
     WorkExample,
     Service,
     CompanyInfo,
-    FAQuestion
+    FAQuestion,
+    Info
 )
 from .serializers import (
     BlogArticleListSerializer,
@@ -16,7 +17,8 @@ from .serializers import (
     WorkExampleListSerializer,
     ServiceSerializer,
     CompanyInfoSerializer,
-    FAQuestionSerializer
+    FAQuestionSerializer,
+    InfoSerializer
 )
 from .pagination import WorkExamplesPagination
 
@@ -54,6 +56,12 @@ class FAQuestionViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = FAQuestion.objects.all().order_by('question')
     pagination_class = None
     serializer_class = FAQuestionSerializer
+
+
+class InfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Info.objects.all()
+    pagination_class = None
+    serializer_class = InfoSerializer
 
 
 class CompanyInfoView(views.APIView):
