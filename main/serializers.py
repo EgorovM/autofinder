@@ -1,3 +1,4 @@
+from django.utils.safestring import mark_safe
 from rest_framework import serializers
 from .models import (
     BlogArticle,
@@ -92,6 +93,11 @@ class FAQuestionSerializer(serializers.ModelSerializer):
 
 
 class InfoSerializer(serializers.ModelSerializer):
+    value = serializers.SerializerMethodField()
+
     class Meta:
         model = Info
         fields = ['id', 'slug', 'value']
+
+    def get_value(self, obj):
+        return mark_safe(obj.value)
