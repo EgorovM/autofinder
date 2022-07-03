@@ -1,4 +1,4 @@
-from django.utils.safestring import mark_safe
+import re
 from rest_framework import serializers
 from .models import (
     BlogArticle,
@@ -100,4 +100,10 @@ class InfoSerializer(serializers.ModelSerializer):
         fields = ['id', 'slug', 'value']
 
     def get_value(self, obj):
-        return mark_safe(obj.value)
+        value = obj.value
+
+        value = re.sub('class="[^"]*"', '', value)
+        value = re.sub('<(\w*) ', '<span ', value, 1)
+        value = re.sub('</\w+>$', '</span>', value)
+
+        return value
