@@ -103,6 +103,7 @@ class InfoSerializer(serializers.ModelSerializer):
         value = obj.value
 
         value = re.sub('class="[^"]*"', '', value)
+        value = re.sub('line-height:[^;]*;', '', value)
         value = re.sub('<[^>]*>', '<span>', value, 1)
         value = re.sub('</\w+>$', '</span>', value)
 
