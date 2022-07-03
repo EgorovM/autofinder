@@ -93,6 +93,7 @@ class FAQuestionSerializer(serializers.ModelSerializer):
 
 
 class InfoSerializer(serializers.ModelSerializer):
+    STYLES_TO_REMOVE = ['line-height', 'font-family', 'font-size']
     value = serializers.SerializerMethodField()
 
     class Meta:
@@ -102,8 +103,10 @@ class InfoSerializer(serializers.ModelSerializer):
     def get_value(self, obj):
         value = obj.value
 
+        for style in InfoSerializer.STYLES_TO_REMOVE:
+            value = re.sub(f'{style}:[^;]*;', '', value)
+
         value = re.sub('class="[^"]*"', '', value)
-        value = re.sub('line-height:[^;]*;', '', value)
         value = re.sub('<[^>]*>', '<span>', value, 1)
         value = re.sub('</\w+>$', '</span>', value)
 
