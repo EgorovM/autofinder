@@ -109,5 +109,7 @@ class InfoSerializer(serializers.ModelSerializer):
         value = re.sub('class="[^"]*"', '', value)
         value = re.sub('<[^>]*>', '<span>', value, 1)
         value = re.sub('</\w+>$', '</span>', value)
+        value = value.replace('&lt;', '<')
+        value = value.replace('&gt;', '>')
 
         return value
