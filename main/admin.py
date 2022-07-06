@@ -10,5 +10,10 @@ admin.site.register(models.FAQuestion)
 
 @admin.register(models.Info)
 class InfoAdmin(admin.ModelAdmin):
-    list_display = ("group", "value")
+    list_display = ("group", "clean_value")
     list_filter = ("group", )
+
+    def clean_value(self, obj):
+        return str(obj)
+
+    clean_value.short_description = "value"
