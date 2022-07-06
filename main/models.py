@@ -166,7 +166,9 @@ class Info(models.Model):
     image = models.ImageField('Изображение', upload_to='info/', blank=True, null=True)
 
     def __str__(self):
-        return re.sub('<[^>]*>', '', self.slug)
+        value = self.value.replace('&lt;', '<').replace('&gt;', '>')
+        value = re.sub('<[^>]*>', '', value)
+        return value
 
     def save(self, *args, **kwargs):
         group_slug = '' if not self.group else self.group.slug
