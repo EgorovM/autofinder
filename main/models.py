@@ -162,7 +162,7 @@ class Info(models.Model):
     group = models.ForeignKey(InfoGroup, on_delete=models.CASCADE, null=True, blank=True)
     _slug = models.CharField('На английском', max_length=129)
     slug = models.CharField(max_length=128, editable=False, unique=True)
-    value = RichTextField('Значение')
+    value = RichTextField('Значение', blank=True)
     image = models.ImageField('Изображение', upload_to='info/', blank=True, null=True)
 
     def __str__(self):
