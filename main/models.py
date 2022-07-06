@@ -163,6 +163,7 @@ class Info(models.Model):
     _slug = models.CharField('На английском', max_length=129)
     slug = models.CharField(max_length=128, editable=False, unique=True)
     value = RichTextField('Значение')
+    image = models.ImageField('Изображение', upload_to='info/')
 
     def __str__(self):
         return re.sub('<[^>]*>', '', self.slug)
