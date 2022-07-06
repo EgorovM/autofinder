@@ -98,7 +98,7 @@ class InfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Info
-        fields = ['id', 'slug', 'value']
+        fields = ['id', 'slug', 'value', 'image']
 
     def get_value(self, obj):
         value = obj.value
