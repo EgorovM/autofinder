@@ -165,7 +165,7 @@ class Info(models.Model):
     value = RichTextField('Значение')
 
     def __str__(self):
-        return self.slug
+        return re.sub('<[^>]*>', '', self.value)
 
     def save(self, *args, **kwargs):
         group_slug = '' if not self.group else self.group.slug
