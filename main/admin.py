@@ -10,5 +10,5 @@ admin.site.register(models.FAQuestion)
 
 @admin.register(models.Info)
 class InfoAdmin(admin.ModelAdmin):
-    list_display = ("group", "slug", "value")
+    list_display = ("group", "value")
     list_filter = ("group", )
