@@ -126,6 +126,7 @@ DJRICHTEXTFIELD_CONFIG = {
         'menubar': False,
         'plugins': 'link image textcolor',
         'toolbar': 'bold italic | link image | removeformat | forecolor',
+        'file_picker_types': 'image',
         'width': 700
     }
 }
