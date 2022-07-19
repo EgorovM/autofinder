@@ -27,7 +27,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '80.78.251.13', '80.78.251.137', 'avtopodbor-spb.pro', 'www.avtopodbor-spb.pro', 'localhost']
+ALLOWED_HOSTS = [
+    'avtopodbor-spb.pro', 
+    'www.avtopodbor-spb.pro', 
+    'chestniy-autopodbor.ru', 
+    'www.chestniy-autopodbor.ru',
+]
+
+if DEBUG:
+    ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
 
 #config
